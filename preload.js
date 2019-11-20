@@ -5,6 +5,8 @@ const mouse = require("./app/utils/Mouse/Mouse");
 const sound = require("./app/utils/Sound/Sound");
 
 let lastCardClick = null;
+let isActive = false;
+let language = "en_us";
 
 async function eventClick(event) {
   const { x, y, button } = event;
@@ -24,7 +26,31 @@ async function eventClick(event) {
   }
 }
 
-mouse.initialize();
+/* mouse.initialize();
 mouse.registerEvent("mouseclick", eventClick);
+ */
+window.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("vor-button");
+  const status = document.getElementById("vor-status");
+  const select = document.getElementById("vor-language");
+  const languages = [
+    { code: "en_us", text: "English US" },
+    { code: "fr_fr", text: "French" }
+  ];
 
-console.log("Try move your mouse or press any key");
+  button.innerText = "Start";
+  status.innerText = "Inactive";
+  for (const language of languages) {
+    select.add(new Option(language.text, language.code));
+  }
+
+  button.addEventListener("click", () => {
+    isActive = !isActive;
+    button.innerText = isActive ? "Pause" : "Start";
+    status.innerText = isActive ? "Active" : "Inactive";
+  });
+
+  select.addEventListener("change", () => {
+    language = select.options[select.selectedIndex].value;
+  });
+});

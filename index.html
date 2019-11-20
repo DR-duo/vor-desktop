@@ -11,12 +11,14 @@
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
-    <title>Hello World!</title>
+    <title>Voice of Runeterra</title>
     <link rel="stylesheet" type="text/css" href="./app/assets/css/app.css" />
   </head>
   <body>
     <div class="vor-container">
-      <button>Pause</button>
+      <div>Status: <span id="vor-status"></span></div>
+      <select id="vor-language"></select>
+      <button id="vor-button"></button>
     </div>
 
     <!-- You can also require other files to run in this process -->
