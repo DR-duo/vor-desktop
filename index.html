@@ -12,17 +12,13 @@
       content="default-src 'self'; script-src 'self'"
     />
     <title>Hello World!</title>
+    <link rel="stylesheet" type="text/css" href="./app/assets/css/app.css" />
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>, Chromium
-    <span id="chrome-version"></span>, and Electron
-    <span id="electron-version"></span>.
-    <audio controls>
-      <source src="horse.ogg" type="audio/ogg" />
-      <source src="horse.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
+    <div class="vor-container">
+      <button>Pause</button>
+    </div>
+
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
   </body>
