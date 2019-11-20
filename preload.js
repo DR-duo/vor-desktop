@@ -5,6 +5,7 @@ const mouse = require("./app/utils/Mouse/Mouse");
 const sound = require("./app/utils/Sound/Sound");
 
 let lastCardClick = null;
+let isActive = false;
 
 async function eventClick(event) {
   const { x, y, button } = event;
@@ -24,14 +25,27 @@ async function eventClick(event) {
   }
 }
 
-mouse.initialize();
+/* mouse.initialize();
 mouse.registerEvent("mouseclick", eventClick);
-
-console.log("Try move your mouse or press any key");
-let temp = false;
+ */
 window.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("vor-button").addEventListener("click", event => {
-    temp = !temp;
-    console.log(temp);
+  const button = document.getElementById("vor-button");
+  const status = document.getElementById("vor-status");
+  const select = document.getElementById("vor-language");
+  const languages = [
+    { code: "en_us", text: "English US" },
+    { code: "fr_fr", text: "French" }
+  ];
+
+  button.innerText = "Start";
+  status.innerText = "Inactive";
+  for (const language of languages) {
+    select.add(new Option(language.text, language.code));
+  }
+
+  button.addEventListener("click", event => {
+    isActive = !isActive;
+    button.innerText = isActive ? "Pause" : "Start";
+    status.innerText = isActive ? "Active" : "Inactive";
   });
 });
