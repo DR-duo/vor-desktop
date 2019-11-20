@@ -6,10 +6,6 @@ const sound = require("./app/utils/Sound/Sound");
 
 let lastCardClick = null;
 
-function playSound() {
-  sound.playSound();
-}
-
 async function eventClick(event) {
   const { x, y, button } = event;
   const card = await runeterra.getCardAtCoord(x, y);
@@ -19,7 +15,7 @@ async function eventClick(event) {
     const { CardID: lastId } = lastCardClick;
 
     if (id === lastId) {
-      playSound();
+      sound.playSound();
     }
 
     lastCardClick = null;
