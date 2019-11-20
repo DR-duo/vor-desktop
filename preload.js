@@ -6,6 +6,7 @@ const sound = require("./app/utils/Sound/Sound");
 
 let lastCardClick = null;
 let isActive = false;
+let language = "en_us";
 
 async function eventClick(event) {
   const { x, y, button } = event;
@@ -43,9 +44,13 @@ window.addEventListener("DOMContentLoaded", () => {
     select.add(new Option(language.text, language.code));
   }
 
-  button.addEventListener("click", event => {
+  button.addEventListener("click", () => {
     isActive = !isActive;
     button.innerText = isActive ? "Pause" : "Start";
     status.innerText = isActive ? "Active" : "Inactive";
+  });
+
+  select.addEventListener("change", () => {
+    language = select.options[select.selectedIndex].value;
   });
 });
