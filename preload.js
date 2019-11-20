@@ -28,3 +28,10 @@ mouse.initialize();
 mouse.registerEvent("mouseclick", eventClick);
 
 console.log("Try move your mouse or press any key");
+let temp = false;
+window.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("vor-button").addEventListener("click", event => {
+    temp = !temp;
+    console.log(temp);
+  });
+});
