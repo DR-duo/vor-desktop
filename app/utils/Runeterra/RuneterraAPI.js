@@ -19,4 +19,4 @@ class RuneterraAPI {
   }
 }
 
-module.exports = RuneterraAPI;
+module.exports = (url, port) => new RuneterraAPI(url, port);

@@ -1,30 +1,30 @@
-const ioHook = require("iohook");
-function eventHandler(event) {
-  console.log(event);
-}
-
-function eventClick(event) {
-  console.log(event);
-  let audio = new Audio("sound.mp3");
-  audio.play();
-}
-
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
-window.addEventListener("DOMContentLoaded", () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector);
-    if (element) element.innerText = text;
-  };
+const runeterra = require("./app/utils/Runeterra/Runeterra");
+const mouse = require("./app/utils/Mouse/Mouse");
+const sound = require("./app/utils/Sound/Sound");
 
-  for (const type of ["chrome", "node", "electron"]) {
-    replaceText(`${type}-version`, process.versions[type]);
+let lastCardClick = null;
+
+async function eventClick(event) {
+  const { x, y, button } = event;
+  const card = await runeterra.getCardAtCoord(x, y);
+  console.log(lastCardClick, card);
+  if (lastCardClick) {
+    const { CardID: id } = card;
+    const { CardID: lastId } = lastCardClick;
+
+    if (id === lastId) {
+      sound.playSound();
+    }
+
+    lastCardClick = null;
+  } else {
+    lastCardClick = card || null;
   }
+}
 
-  ioHook.start(true);
-  ioHook.on("mouseclick", eventClick);
-  ioHook.on("keypress", eventHandler);
-  ioHook.on("mousewheel", eventHandler);
-  ioHook.on("mousemove", eventHandler);
-  console.log("Try move your mouse or press any key");
-});
+mouse.initialize();
+mouse.registerEvent("mouseclick", eventClick);
+
+console.log("Try move your mouse or press any key");
