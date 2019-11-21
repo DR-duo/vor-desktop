@@ -10,7 +10,6 @@ let language = "en_us";
 
 const synth = new Synth();
 
-
 async function eventClick(event) {
   const { x, y, button } = event;
   const card = await runeterra.getCardAtCoord(x, y);
@@ -20,7 +19,7 @@ async function eventClick(event) {
     const { CardID: lastId } = lastCardClick;
 
     if (id === lastId) {
-      synth.say(card.CardCode);
+      synth.say(card.name);
     }
 
     lastCardClick = null;
