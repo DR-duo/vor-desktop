@@ -5,9 +5,10 @@ const path = require("path");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-
 let top = {};
-let close = false;
+
+// flag to close
+let forceClose = false; // eslint-disable-line
 
 function createWindow() {
   // Create the browser window.
@@ -15,9 +16,9 @@ function createWindow() {
     width: 350,
     height: 250,
     webPreferences: {
-      preload: path.join(__dirname, "preload.js")
+      preload: path.join(__dirname, "preload.js"),
     },
-    icon: path.join(__dirname, "app/assets/img/vor-logo-24x24.png")
+    icon: path.join(__dirname, "app/assets/img/vor-logo-24x24.png"),
   });
 
   mainWindow.setMenuBarVisibility(false);
@@ -49,29 +50,22 @@ function createWindow() {
     return false; // equivalent to `return false` but not recommended
   });
 
-  const tray = new Tray(
-    path.join(__dirname, "app/assets/img/vor-logo-24x24.png")
-  );
+  const tray = new Tray(path.join(__dirname, "app/assets/img/vor-logo-24x24.png"));
   const menu = Menu.buildFromTemplate([
     { label: `Version: ${app.getVersion()}`, enabled: false },
     {
-      label: "Actions",
-      submenu: [
-        {
-          label: "Open",
-          click: (item, window, event) => {
-            top.win.show();
-          }
-        }
-      ]
+      label: "Open",
+      click: () => {
+        top.win.show();
+      },
     },
     {
       label: "Exit",
-      click: (item, window, event) => {
-        close = true;
+      click: () => {
+        forceClose = true;
         top.win.close();
-      }
-    }
+      },
+    },
   ]);
 
   tray.setToolTip("Voice of Runeterra");
