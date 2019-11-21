@@ -9,12 +9,13 @@ let lastCardClick = null;
 let isActive = false;
 let language = Object.keys(langs)[0]; // eslint-disable-line
 
-const synth = new Synth();
+let synth;
 
 async function eventClick(event) {
   const { x, y } = event;
   const card = await runeterra.getCardAtCoord(x, y);
   console.log(lastCardClick, card);
+
   if (lastCardClick) {
     const { CardID: id } = card;
     const { CardID: lastId } = lastCardClick;
@@ -29,10 +30,11 @@ async function eventClick(event) {
   }
 }
 
-//
+// Setup mouse events
 mouse.initialize();
 mouse.registerEvent("mouseclick", eventClick);
 
+// Setup configuration windows
 window.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("vor-button");
   const status = document.getElementById("vor-status");
@@ -49,8 +51,33 @@ window.addEventListener("DOMContentLoaded", () => {
     button.innerText = isActive ? "Pause" : "Start";
     status.innerText = isActive ? "Active" : "Inactive";
   });
-
   select.addEventListener("change", () => {
     language = select.options[select.selectedIndex].value;
   });
+});
+
+window.addEventListener("load", () => {
+  // syntheic voices take time to load.
+  // keep checking until voices come
+  new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      if (window.speechSynthesis.getVoices().length !== 0) {
+        synth = new Synth();
+        resolve(synth.getVoices());
+        clearInterval(interval);
+      }
+    }, 10);
+  })
+    .then(voices => {
+      const voicesSelect = document.getElementById("vor-voices");
+
+      voices.forEach((voice, index) => {
+        voicesSelect.add(new Option(voice.name, index));
+      });
+      voicesSelect.addEventListener("change", () => {
+        const voiceIndex = voicesSelect.options[voicesSelect.selectedIndex].value;
+        synth.setVoice(synth.getVoices()[voiceIndex]);
+      });
+    })
+    .catch(console.log);
 });
