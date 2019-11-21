@@ -34,20 +34,18 @@ window.addEventListener(MOUSE_ACTION_MIDDLE, handleMiddleClick);
 // Setup configuration windows
 window.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("vor-button");
-  const status = document.getElementById("vor-status");
   const select = document.getElementById("vor-language");
   const volume = document.getElementById("vor-volume");
+  const test = document.getElementById("vor-test");
 
-  button.innerText = "Start";
-  status.innerText = "Inactive";
+  button.innerText = "Inactive";
   Object.entries(langs).forEach(lang => {
     select.add(new Option(lang[1], lang[0]));
   });
 
   button.addEventListener("click", () => {
     isActive = !isActive;
-    button.innerText = isActive ? "Pause" : "Start";
-    status.innerText = isActive ? "Active" : "Inactive";
+    button.innerText = isActive ? "Active" : "Inactive";
 
     // manage events
     if (isActive) {
@@ -57,6 +55,8 @@ window.addEventListener("DOMContentLoaded", () => {
       mouse.unregisterEvent("mouseclick", handleMouseClick);
       mouse.stopInterval();
     }
+    button.classList.toggle("btn-on");
+    button.classList.toggle("btn-off");
   });
   select.addEventListener("change", () => {
     const language = select.options[select.selectedIndex].value;
@@ -65,6 +65,9 @@ window.addEventListener("DOMContentLoaded", () => {
   volume.addEventListener("change", () => {
     const vol = volume.value / 100;
     synth.setVolume(vol);
+  });
+  test.addEventListener("click", () => {
+    synth.say("Legends of Runeterra");
   });
 });
 
