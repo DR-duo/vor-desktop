@@ -1,37 +1,35 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 const runeterra = require("./app/utils/Runeterra/Runeterra");
-const mouse = require("./app/utils/Mouse/Mouse");
+const { MOUSE_ACTION_DOUBLE, MOUSE_ACTION_MIDDLE, mouse } = require("./app/utils/Mouse/Mouse");
 const Synth = require("./app/utils/Sound/BrowserSynth");
 const { langs } = require("./config.js");
 
-let lastCardClick = null;
 let isActive = false;
-
 let synth;
 
-async function eventClick(event) {
-  const { x, y } = event;
+// functions for mouse events
+async function handleDoubleClick(event) {
+  const { x, y } = event.detail;
   const card = await runeterra.getCardAtCoord(x, y);
-  console.log(lastCardClick, card);
 
-  if (lastCardClick) {
-    const { CardID: id } = card;
-    const { CardID: lastId } = lastCardClick;
-
-    if (id === lastId) {
-      synth.say(card.name);
-    }
-
-    lastCardClick = null;
-  } else {
-    lastCardClick = card || null;
+  if (card) {
+    synth.say(card.name);
   }
 }
 
-// Setup mouse events
+function handleMiddleClick() {
+  synth.say("middle click");
+}
+
+function handleMouseClick(event) {
+  mouse.logEvent(event);
+}
+
+// Initial mouse events create custom mouse events
 mouse.initialize();
-mouse.registerEvent("mouseclick", eventClick);
+window.addEventListener(MOUSE_ACTION_DOUBLE, handleDoubleClick);
+window.addEventListener(MOUSE_ACTION_MIDDLE, handleMiddleClick);
 
 // Setup configuration windows
 window.addEventListener("DOMContentLoaded", () => {
@@ -49,6 +47,15 @@ window.addEventListener("DOMContentLoaded", () => {
     isActive = !isActive;
     button.innerText = isActive ? "Pause" : "Start";
     status.innerText = isActive ? "Active" : "Inactive";
+
+    // manage events
+    if (isActive) {
+      mouse.registerEvent("mouseclick", handleMouseClick);
+      mouse.startInterval();
+    } else {
+      mouse.unregisterEvent("mouseclick", handleMouseClick);
+      mouse.stopInterval();
+    }
   });
   select.addEventListener("change", () => {
     const language = select.options[select.selectedIndex].value;
@@ -69,11 +76,13 @@ window.addEventListener("load", () => {
     }, 10);
   })
     .then(voices => {
+      // Populating choices
       const voicesSelect = document.getElementById("vor-voices");
       voices.forEach((voice, index) => {
         voicesSelect.add(new Option(voice.name, index));
       });
 
+      // Change selected voice index when changed
       voicesSelect.addEventListener("change", () => {
         const voiceIndex = voicesSelect.options[voicesSelect.selectedIndex].value;
         synth.setVoice(synth.getVoices()[voiceIndex]);
