@@ -4,6 +4,7 @@ const runeterra = require("./app/utils/Runeterra/Runeterra");
 const { MOUSE_ACTION_DOUBLE, MOUSE_ACTION_MIDDLE, mouse } = require("./app/utils/Mouse/Mouse");
 const Synth = require("./app/utils/Sound/BrowserSynth");
 const { langs } = require("./config.js");
+const helpWindow = require("./app/HelpWindow");
 
 let isActive = false;
 let synth;
@@ -37,6 +38,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const select = document.getElementById("vor-language");
   const volume = document.getElementById("vor-volume");
   const test = document.getElementById("vor-test");
+  const help = document.getElementById("vor-help");
 
   button.innerText = "Inactive";
   Object.entries(langs).forEach(lang => {
@@ -68,6 +70,9 @@ window.addEventListener("DOMContentLoaded", () => {
   });
   test.addEventListener("click", () => {
     synth.say("Legends of Runeterra");
+  });
+  help.addEventListener("click", () => {
+    helpWindow();
   });
 });
 
