@@ -13,7 +13,6 @@ let synth;
 async function eventClick(event) {
   const { x, y } = event;
   const card = await runeterra.getCardAtCoord(x, y);
-  console.log(lastCardClick, card);
 
   if (lastCardClick) {
     const { CardID: id } = card;
@@ -31,7 +30,6 @@ async function eventClick(event) {
 
 // Setup mouse events
 mouse.initialize();
-mouse.registerEvent("mouseclick", eventClick);
 
 // Setup configuration windows
 window.addEventListener("DOMContentLoaded", () => {
@@ -49,6 +47,13 @@ window.addEventListener("DOMContentLoaded", () => {
     isActive = !isActive;
     button.innerText = isActive ? "Pause" : "Start";
     status.innerText = isActive ? "Active" : "Inactive";
+
+    //
+    if (isActive) {
+      mouse.registerEvent("mouseclick", eventClick);
+    } else {
+      mouse.unregisterEvent("mouseclick", eventClick);
+    }
   });
   select.addEventListener("change", () => {
     const language = select.options[select.selectedIndex].value;

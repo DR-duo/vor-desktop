@@ -1,8 +1,8 @@
 const ioHook = require("iohook");
-
+/* 
 const MOUSE_LEFT_CLICK = 1;
 const MOUSE_RIGHT_CLICK = 2;
-const MOUSE_MIDDLE_CLICK = 3;
+const MOUSE_MIDDLE_CLICK = 3; */
 
 class MouseAdapter {
   constructor() {}
@@ -13,6 +13,9 @@ class MouseAdapter {
 
   registerEvent(event, func) {
     ioHook.on(event, func);
+  }
+  unregisterEvent(event, func) {
+    ioHook.off(event, func);
   }
 }
 
