@@ -14,7 +14,6 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 350,
     height: 250,
-    closable: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
     },
@@ -34,11 +33,11 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    top.win = null;
+    top.win.removeAllListeners("close");
+    top = null;
   });
 
   mainWindow.on("close", event => {
-    console.log("close");
     if (!close) {
       event.preventDefault();
       mainWindow.minimize();
@@ -67,7 +66,7 @@ function createWindow() {
       ]
     },
     {
-      label: "Quit",
+      label: "Exit",
       click: (item, window, event) => {
         close = true;
         top.win.close();
