@@ -1,13 +1,14 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 const runeterra = require("./app/utils/Runeterra/Runeterra");
-const { mouse } = require("./app/utils/Mouse/Mouse");
+const { MOUSE_ACTION_DOUBLE, MOUSE_ACTION_MIDDLE, mouse } = require("./app/utils/Mouse/Mouse");
 const Synth = require("./app/utils/Sound/BrowserSynth");
 const { langs } = require("./config.js");
 
 let isActive = false;
 let synth;
 
+// functions for mouse events
 async function handleDoubleClick(event) {
   const { x, y } = event.detail;
   const card = await runeterra.getCardAtCoord(x, y);
@@ -17,7 +18,7 @@ async function handleDoubleClick(event) {
   }
 }
 
-async function handleMiddleClick() {
+function handleMiddleClick() {
   synth.say("middle click");
 }
 
@@ -27,8 +28,8 @@ function handleMouseClick(event) {
 
 // Initial mouse events create custom mouse events
 mouse.initialize();
-window.addEventListener("double click", handleDoubleClick);
-window.addEventListener("middle click", handleMiddleClick);
+window.addEventListener(MOUSE_ACTION_DOUBLE, handleDoubleClick);
+window.addEventListener(MOUSE_ACTION_MIDDLE, handleMiddleClick);
 
 // Setup configuration windows
 window.addEventListener("DOMContentLoaded", () => {
@@ -47,7 +48,7 @@ window.addEventListener("DOMContentLoaded", () => {
     button.innerText = isActive ? "Pause" : "Start";
     status.innerText = isActive ? "Active" : "Inactive";
 
-    //
+    // manage events
     if (isActive) {
       mouse.registerEvent("mouseclick", handleMouseClick);
       mouse.startInterval();
@@ -75,11 +76,13 @@ window.addEventListener("load", () => {
     }, 10);
   })
     .then(voices => {
+      // Populating choices
       const voicesSelect = document.getElementById("vor-voices");
       voices.forEach((voice, index) => {
         voicesSelect.add(new Option(voice.name, index));
       });
 
+      // Change selected voice index when changed
       voicesSelect.addEventListener("change", () => {
         const voiceIndex = voicesSelect.options[voicesSelect.selectedIndex].value;
         synth.setVoice(synth.getVoices()[voiceIndex]);
