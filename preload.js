@@ -3,13 +3,13 @@
 const runeterra = require("./app/utils/Runeterra/Runeterra");
 const mouse = require("./app/utils/Mouse/Mouse");
 const Synth = require("./app/utils/Sound/BrowserSynth");
+const { langs } = require("./config.js");
 
 let lastCardClick = null;
 let isActive = false;
-let language = "en_us";
+let language = Object.keys(langs)[0]; // pick first as default
 
 const synth = new Synth();
-
 
 async function eventClick(event) {
   const { x, y, button } = event;
@@ -20,7 +20,7 @@ async function eventClick(event) {
     const { CardID: lastId } = lastCardClick;
 
     if (id === lastId) {
-      synth.say(card.CardCode);
+      synth.say(card.name);
     }
 
     lastCardClick = null;
@@ -35,16 +35,12 @@ window.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("vor-button");
   const status = document.getElementById("vor-status");
   const select = document.getElementById("vor-language");
-  const languages = [
-    { code: "en_us", text: "English US" },
-    { code: "fr_fr", text: "French" }
-  ];
 
   button.innerText = "Start";
   status.innerText = "Inactive";
-  for (let lang of languages) {
-    select.add(new Option(lang.text, lang.code));
-  }
+  Object.entries(langs).forEach(lang => {
+    select.add(new Option(lang[1], lang[0]));
+  });
 
   button.addEventListener("click", () => {
     isActive = !isActive;

@@ -1,15 +1,17 @@
 "use strict";
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
+
+let top = {};
+let close = false;
 
 function createWindow() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
+  const mainWindow = new BrowserWindow({
     width: 350,
     height: 250,
     webPreferences: {
@@ -31,18 +33,52 @@ function createWindow() {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null;
+    top.win.removeAllListeners("close");
+    top = null;
   });
 
   mainWindow.on("close", event => {
-    event.preventDefault();
-    mainWindow.minimize();
+    if (!close) {
+      event.preventDefault();
+      mainWindow.minimize();
+    }
     // Unlike usual browsers that a message box will be prompted to users, returning
     // a non-void value will silently cancel the close.
     // It is recommended to use the dialog API to let the user confirm closing the
     // application.
-    event.returnValue = false; // equivalent to `return false` but not recommended
+    return false; // equivalent to `return false` but not recommended
   });
+
+  const tray = new Tray(
+    path.join(__dirname, "app/assets/img/vor-logo-24x24.png")
+  );
+  const menu = Menu.buildFromTemplate([
+    { label: `Version: ${app.getVersion()}`, enabled: false },
+    {
+      label: "Actions",
+      submenu: [
+        {
+          label: "Open",
+          click: (item, window, event) => {
+            top.win.show();
+          }
+        }
+      ]
+    },
+    {
+      label: "Exit",
+      click: (item, window, event) => {
+        close = true;
+        top.win.close();
+      }
+    }
+  ]);
+
+  tray.setToolTip("Voice of Runeterra");
+  tray.setContextMenu(menu);
+
+  top.tray = tray;
+  top.win = mainWindow;
 }
 
 // This method will be called when Electron has finished
@@ -60,7 +96,7 @@ app.on("window-all-closed", function() {
 app.on("activate", function() {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow();
+  if (top.win === null) createWindow();
 });
 
 // In this file you can include the rest of your app's specific main process
