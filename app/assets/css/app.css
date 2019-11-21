@@ -18,11 +18,14 @@ body {
 
 .flex-header {
   flex-basis: 3rem;
-  margin: 0 1rem;
 }
 
 .flex-content {
   flex-grow: 1;
+}
+
+.space-around {
+  justify-content: space-around;
 }
 
 .vor-container {
@@ -31,4 +34,8 @@ body {
 
 .vor-button-wrapper {
   margin: 1rem 0;
+}
+
+.vor-dropdown {
+  width: 7rem;
 }

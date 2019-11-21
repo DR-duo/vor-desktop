@@ -5,7 +5,7 @@ class BrowserSynth {
   }
 
   getVoices() {
-    this.synth.getVoices();
+    return this.synth.getVoices();
   }
 
   setVoice(voice) {
@@ -20,7 +20,6 @@ class BrowserSynth {
       phrase.addEventListener("error", reject);
       this.synth.speak(phrase);
     });
-
   }
 }
 

@@ -8,7 +8,7 @@ const path = require("path");
 let top = {};
 
 // flag to close
-let forceClose = false; // eslint-disable-line
+let forceClose = false;
 
 function createWindow() {
   // Create the browser window.
@@ -30,7 +30,7 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
-  mainWindow.on("closed", function() {
+  mainWindow.on("closed", () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
@@ -39,7 +39,7 @@ function createWindow() {
   });
 
   mainWindow.on("close", event => {
-    if (!close) {
+    if (!forceClose) {
       event.preventDefault();
       mainWindow.minimize();
     }
