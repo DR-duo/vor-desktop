@@ -10,12 +10,15 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 300,
-    height: 200,
+    width: 350,
+    height: 250,
     webPreferences: {
       preload: path.join(__dirname, "preload.js")
-    }
+    },
+    icon: path.join(__dirname, "app/assets/img/vor-logo-24x24.png")
   });
+
+  mainWindow.setMenuBarVisibility(false);
 
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
@@ -29,6 +32,16 @@ function createWindow() {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     mainWindow = null;
+  });
+
+  mainWindow.on("close", event => {
+    event.preventDefault();
+    mainWindow.minimize();
+    // Unlike usual browsers that a message box will be prompted to users, returning
+    // a non-void value will silently cancel the close.
+    // It is recommended to use the dialog API to let the user confirm closing the
+    // application.
+    event.returnValue = false; // equivalent to `return false` but not recommended
   });
 }
 

@@ -14,11 +14,23 @@
     <title>Voice of Runeterra</title>
     <link rel="stylesheet" type="text/css" href="./app/assets/css/app.css" />
   </head>
-  <body>
-    <div class="vor-container">
-      <div>Status: <span id="vor-status"></span></div>
-      <select id="vor-language"></select>
-      <button id="vor-button"></button>
+  <body class="flex-center">
+    <div class="vor-container flex-center">
+      <div class="flex-block">
+        <div class="flex-header">
+          <span>Status</span>
+          <span>Language</span>
+        </div>
+        <div clas="flex-content">
+          <div id="vor-status"></div>
+          <div>
+            <select id="vor-language"></select>
+          </div>
+        </div>
+      </div>
+      <div class="flex-block flex-center vor-button-wrapper">
+        <button id="vor-button"></button>
+      </div>
     </div>
 
     <!-- You can also require other files to run in this process -->

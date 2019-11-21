@@ -40,8 +40,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
   button.innerText = "Start";
   status.innerText = "Inactive";
-  for (const language of languages) {
-    select.add(new Option(language.text, language.code));
+  for (let lang of languages) {
+    select.add(new Option(lang.text, lang.code));
   }
 
   button.addEventListener("click", () => {
