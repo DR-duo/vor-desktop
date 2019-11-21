@@ -2,11 +2,14 @@
 // It has the same sandbox as a Chrome extension.
 const runeterra = require("./app/utils/Runeterra/Runeterra");
 const mouse = require("./app/utils/Mouse/Mouse");
-const sound = require("./app/utils/Sound/Sound");
+const Synth = require("./app/utils/Sound/BrowserSynth");
 
 let lastCardClick = null;
 let isActive = false;
 let language = "en_us";
+
+const synth = new Synth();
+
 
 async function eventClick(event) {
   const { x, y, button } = event;
@@ -17,7 +20,7 @@ async function eventClick(event) {
     const { CardID: lastId } = lastCardClick;
 
     if (id === lastId) {
-      sound.playSound();
+      synth.say(card.CardCode);
     }
 
     lastCardClick = null;
@@ -26,9 +29,8 @@ async function eventClick(event) {
   }
 }
 
-/* mouse.initialize();
+mouse.initialize();
 mouse.registerEvent("mouseclick", eventClick);
- */
 window.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("vor-button");
   const status = document.getElementById("vor-status");
