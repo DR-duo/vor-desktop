@@ -1,37 +1,34 @@
 // All of the Node.js APIs are available in the preload process.
 // It has the same sandbox as a Chrome extension.
 const runeterra = require("./app/utils/Runeterra/Runeterra");
-const mouse = require("./app/utils/Mouse/Mouse");
+const { mouse } = require("./app/utils/Mouse/Mouse");
 const Synth = require("./app/utils/Sound/BrowserSynth");
 const { langs } = require("./config.js");
 
-let lastCardClick = null;
 let isActive = false;
-
 let synth;
 
-async function eventClick(event) {
-  const { x, y } = event;
+async function handleDoubleClick(event) {
+  const { x, y } = event.detail;
   const card = await runeterra.getCardAtCoord(x, y);
-  mouse.logEvent(event);
-  /*   console.log(event);
 
-  if (lastCardClick) {
-    const { CardID: id } = card;
-    const { CardID: lastId } = lastCardClick;
-
-    if (id === lastId) {
-      synth.say(card.name);
-    }
-
-    lastCardClick = null;
-  } else {
-    lastCardClick = card || null;
-  } */
+  if (card) {
+    synth.say(card.name);
+  }
 }
 
-// Setup mouse events
+async function handleMiddleClick() {
+  synth.say("middle click");
+}
+
+function handleMouseClick(event) {
+  mouse.logEvent(event);
+}
+
+// Initial mouse events create custom mouse events
 mouse.initialize();
+window.addEventListener("double click", handleDoubleClick);
+window.addEventListener("middle click", handleMiddleClick);
 
 // Setup configuration windows
 window.addEventListener("DOMContentLoaded", () => {
@@ -52,12 +49,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
     //
     if (isActive) {
-      mouse.registerEvent("mouseclick", eventClick);
+      mouse.registerEvent("mouseclick", handleMouseClick);
       mouse.startInterval();
     } else {
-      mouse.unregisterEvent("mouseclick", eventClick);
+      mouse.unregisterEvent("mouseclick", handleMouseClick);
       mouse.stopInterval();
-      mouse.test();
     }
   });
   select.addEventListener("change", () => {

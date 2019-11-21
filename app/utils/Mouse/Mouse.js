@@ -9,17 +9,13 @@ const MOUSE_ACTION_MIDDLE = "middle click";
 
 class MouseAdapter {
   constructor() {
-    this.events = [];
+    this.logs = [];
     this.interval = null;
-
-    this.actions = null;
+    this.events = {};
   }
 
   initialize() {
     ioHook.start(true);
-    ioHook.on("double click", () => {
-      console.log("fwef");
-    });
   }
 
   registerEvent(event, func) {
@@ -30,14 +26,22 @@ class MouseAdapter {
     ioHook.off(event, func);
   }
 
+  registerCustomEvent(key, obj) {
+    this.events[key] = obj;
+  }
+
+  unregisterCustomEvent(key) {
+    delete this.events[key];
+  }
+
   logEvent(event) {
-    this.events.push(event);
+    this.logs.push(event);
   }
 
   startInterval() {
     this.interval = setInterval(() => {
       this.evaluateEvents();
-    }, 100);
+    }, 1000);
   }
 
   stopInterval() {
@@ -49,30 +53,28 @@ class MouseAdapter {
     this.actions = new Set();
     let lastClick = null;
 
-    this.events.forEach(event => {
+    this.logs.forEach(event => {
       switch (event.button) {
         case MOUSE_LEFT_CLICK:
           if (lastClick && lastClick.button === MOUSE_LEFT_CLICK) {
-            this.actions.add(MOUSE_ACTION_DOUBLE);
+            console.log("doule click baby");
+            dispatchEvent(new CustomEvent(MOUSE_ACTION_DOUBLE, { detail: event }));
           }
           break;
         case MOUSE_MIDDLE_CLICK:
-          this.actions.add(MOUSE_ACTION_MIDDLE);
+          //dispatchEvent(this.events[MOUSE_ACTION_MIDDLE]);
           break;
         default:
           return;
       }
+      lastClick = event;
     });
 
-    this.events = [];
-  }
-
-  // Returns the list of actions, clear the action queue
-  resolveActions() {
-    const actions = [...this.actions];
-    this.actions = null;
-    return actions;
+    // clear the logs for next interval
+    this.logs = [];
   }
 }
 
-module.exports = new MouseAdapter();
+module.exports = {
+  mouse: new MouseAdapter(),
+};
