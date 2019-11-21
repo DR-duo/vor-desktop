@@ -13,6 +13,8 @@ let synth;
 async function eventClick(event) {
   const { x, y } = event;
   const card = await runeterra.getCardAtCoord(x, y);
+  mouse.logEvent(event);
+  /*   console.log(event);
 
   if (lastCardClick) {
     const { CardID: id } = card;
@@ -25,7 +27,7 @@ async function eventClick(event) {
     lastCardClick = null;
   } else {
     lastCardClick = card || null;
-  }
+  } */
 }
 
 // Setup mouse events
@@ -51,8 +53,11 @@ window.addEventListener("DOMContentLoaded", () => {
     //
     if (isActive) {
       mouse.registerEvent("mouseclick", eventClick);
+      mouse.startInterval();
     } else {
       mouse.unregisterEvent("mouseclick", eventClick);
+      mouse.stopInterval();
+      mouse.test();
     }
   });
   select.addEventListener("change", () => {
