@@ -1,6 +1,27 @@
 const api = require("./RuneterraAPI")();
+const config = require("../../../config.js");
+
+const cardData = Object.keys(config.langs).reduce((langKeys, lang) => {
+  const myPath = `../../../app/assets/card_data/set1-${lang}.json`;
+  const data = require(myPath).reduce((cards, card) => {
+    cards[card.cardCode] = card;
+    return cards;
+  }, {});
+
+  langKeys[lang] = data;
+  return langKeys;
+}, {});
 
 class RuneterraAdapter {
+
+  constructor() {
+    this.lang = "en_us";
+  }
+
+  setLanguage(lang) {
+    this.lang = lang;
+  }
+
   /**
    * Returns card at specified x,y coordinate.
    * x, y have origin from top left
@@ -13,36 +34,25 @@ class RuneterraAdapter {
     const gameX = x;
     const gameY = screenSize.ScreenHeight - y;
 
-    const cards = [...Rectangles];
-    const card = cards
-      .reduce((accum, card) => {
-        if (card.CardCode === "face") {
-          return [...accum];
-        } else {
-          return [...accum, card];
-        }
-      }, [])
+    const card = Rectangles
+      .filter((card) => card.CardCode !== "face")
       .find(({ TopLeftX, TopLeftY, Height, Width }) => {
         const left = TopLeftX;
         const right = TopLeftX + Width;
-        const top = TopLeftY;
+        const topEdge = TopLeftY;
         const bottom = TopLeftY - Height;
         /*         console.log(`x:${x} y:${y}
         gameX:${gameX} gameY:${gameY}
         CardCode: ${CardCode}
         left:${left} right:${right} top:${top} bottom: ${bottom}`); */
 
-        if (
-          gameX >= left &&
+        return gameX >= left &&
           gameX <= right &&
-          gameY <= top &&
-          gameY >= bottom
-        ) {
-          return true;
-        }
+          gameY <= topEdge &&
+          gameY >= bottom;
       });
 
-    return card;
+    return card ? cardData[this.lang][card.CardCode] : null;
   }
 }
 
