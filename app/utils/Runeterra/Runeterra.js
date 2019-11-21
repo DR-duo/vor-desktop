@@ -13,9 +13,8 @@ const cardData = Object.keys(config.langs).reduce((langKeys, lang) => {
 }, {});
 
 class RuneterraAdapter {
-
   constructor() {
-    this.lang = "en_us";
+    this.lang = Object.keys(config.langs)[0];
   }
 
   setLanguage(lang) {
@@ -27,16 +26,12 @@ class RuneterraAdapter {
    * x, y have origin from top left
    */
   async getCardAtCoord(x, y) {
-    const {
-      Rectangles,
-      Screen: screenSize
-    } = await api.endpointPositionalRectangles();
+    const { Rectangles, Screen: screenSize } = await api.endpointPositionalRectangles();
     const gameX = x;
     const gameY = screenSize.ScreenHeight - y;
 
-    const card = Rectangles
-      .filter((card) => card.CardCode !== "face")
-      .find(({ TopLeftX, TopLeftY, Height, Width }) => {
+    const card = Rectangles.filter(card => card.CardCode !== "face").find(
+      ({ TopLeftX, TopLeftY, Height, Width }) => {
         const left = TopLeftX;
         const right = TopLeftX + Width;
         const topEdge = TopLeftY;
@@ -46,11 +41,9 @@ class RuneterraAdapter {
         CardCode: ${CardCode}
         left:${left} right:${right} top:${top} bottom: ${bottom}`); */
 
-        return gameX >= left &&
-          gameX <= right &&
-          gameY <= topEdge &&
-          gameY >= bottom;
-      });
+        return gameX >= left && gameX <= right && gameY <= topEdge && gameY >= bottom;
+      }
+    );
 
     return card ? cardData[this.lang][card.CardCode] : null;
   }

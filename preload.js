@@ -7,7 +7,6 @@ const { langs } = require("./config.js");
 
 let lastCardClick = null;
 let isActive = false;
-let language = Object.keys(langs)[0]; // eslint-disable-line
 
 let synth;
 
@@ -52,14 +51,15 @@ window.addEventListener("DOMContentLoaded", () => {
     status.innerText = isActive ? "Active" : "Inactive";
   });
   select.addEventListener("change", () => {
-    language = select.options[select.selectedIndex].value;
+    const language = select.options[select.selectedIndex].value;
+    runeterra.setLanguage(language);
   });
 });
 
 window.addEventListener("load", () => {
   // syntheic voices take time to load.
   // keep checking until voices come
-  new Promise((resolve, reject) => {
+  new Promise(resolve => {
     const interval = setInterval(() => {
       if (window.speechSynthesis.getVoices().length !== 0) {
         synth = new Synth();
@@ -70,10 +70,10 @@ window.addEventListener("load", () => {
   })
     .then(voices => {
       const voicesSelect = document.getElementById("vor-voices");
-
       voices.forEach((voice, index) => {
         voicesSelect.add(new Option(voice.name, index));
       });
+
       voicesSelect.addEventListener("change", () => {
         const voiceIndex = voicesSelect.options[voicesSelect.selectedIndex].value;
         synth.setVoice(synth.getVoices()[voiceIndex]);
