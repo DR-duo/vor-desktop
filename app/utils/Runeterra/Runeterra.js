@@ -5,7 +5,7 @@ class RuneterraAdapter {
    * Returns card at specified x,y coordinate.
    * x, y have origin from top left
    */
-  getCardAtCoord = async (x, y) => {
+  async getCardAtCoord(x, y) {
     const {
       Rectangles,
       Screen: screenSize
@@ -43,7 +43,7 @@ class RuneterraAdapter {
       });
 
     return card;
-  };
+  }
 }
 
 module.exports = new RuneterraAdapter();
