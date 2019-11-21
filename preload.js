@@ -36,6 +36,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("vor-button");
   const status = document.getElementById("vor-status");
   const select = document.getElementById("vor-language");
+  const volume = document.getElementById("vor-volume");
 
   button.innerText = "Start";
   status.innerText = "Inactive";
@@ -61,6 +62,10 @@ window.addEventListener("DOMContentLoaded", () => {
     const language = select.options[select.selectedIndex].value;
     runeterra.setLanguage(language);
   });
+  volume.addEventListener("change", () => {
+    const vol = volume.value / 100;
+    synth.setVolume(vol);
+  });
 });
 
 window.addEventListener("load", () => {
@@ -74,19 +79,17 @@ window.addEventListener("load", () => {
         clearInterval(interval);
       }
     }, 10);
-  })
-    .then(voices => {
-      // Populating choices
-      const voicesSelect = document.getElementById("vor-voices");
-      voices.forEach((voice, index) => {
-        voicesSelect.add(new Option(voice.name, index));
-      });
+  }).then(voices => {
+    // Populating choices
+    const voicesSelect = document.getElementById("vor-voices");
+    voices.forEach((voice, index) => {
+      voicesSelect.add(new Option(voice.name, index));
+    });
 
-      // Change selected voice index when changed
-      voicesSelect.addEventListener("change", () => {
-        const voiceIndex = voicesSelect.options[voicesSelect.selectedIndex].value;
-        synth.setVoice(synth.getVoices()[voiceIndex]);
-      });
-    })
-    .catch(console.log);
+    // Change selected voice index when changed
+    voicesSelect.addEventListener("change", () => {
+      const voiceIndex = voicesSelect.options[voicesSelect.selectedIndex].value;
+      synth.setVoice(synth.getVoices()[voiceIndex]);
+    });
+  });
 });

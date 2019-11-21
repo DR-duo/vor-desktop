@@ -12,7 +12,7 @@ class RuneterraAPI {
   /* Basic one to one with API */
   async endpointPositionalRectangles() {
     const endpoint = `${this.url}/positional-rectangles`;
-    const response = await axios.get(endpoint);
+    const response = await axios.get(endpoint).catch(console.log);
     const { data } = response;
 
     return data;
