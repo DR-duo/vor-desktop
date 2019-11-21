@@ -13,8 +13,9 @@ let forceClose = false;
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 350,
-    height: 250,
+    width: 450,
+    height: 600,
+    resizable: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
     },
