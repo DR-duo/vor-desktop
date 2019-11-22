@@ -1,6 +1,7 @@
 "use strict";
 // Modules to control application life and create native browser window
 const { app, BrowserWindow, Tray, Menu } = require("electron");
+const helpWindow = require("./app/HelpWindow");
 const path = require("path");
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -58,6 +59,12 @@ function createWindow() {
       label: "Open",
       click: () => {
         top.win.show();
+      },
+    },
+    {
+      label: "Help",
+      click: () => {
+        top.help = helpWindow();
       },
     },
     {
