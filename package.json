@@ -5,7 +5,7 @@
   "description": "A program to help voice cards in game Legends of Runeterra.",
   "main": "main.js",
   "scripts": {
-    "postinstall": "electron-rebuild && electron-builder install-app-deps",
+    "postinstall": "electron-builder install-app-deps",
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
@@ -22,7 +22,6 @@
   "devDependencies": {
     "electron": "^6.1.4",
     "electron-builder": "^21.2.0",
-    "electron-rebuild": "^1.8.6",
     "electron-reload": "^1.5.0",
     "eslint": "^6.6.0"
   },
@@ -52,8 +51,11 @@
     "productName": "Voice of Runeterra",
     "copyright": "Copyright © year ${author}",
     "win": {
-      "target": "NSIS",
+      "target": "portable",
       "icon": "app/assets/img/vor-logo-256x256.ico"
+    },
+    "portable": {
+      "artifactName": "Voice of Runeterra.exe"
     }
   }
 }
