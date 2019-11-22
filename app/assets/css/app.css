@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Alatsi";
-  src: url("../fonts/Alatsi/Alatsi-Regular.ttf") format("ttf");
+  src: url("../fonts/Alatsi/Alatsi-Regular.ttf");
 }
 
 @font-face {
   font-family: "Vesper Libre";
-  src: url("../fonts/Vesper_Libre/VesperLibre-Regular.ttf") format("ttf");
+  src: url("../fonts/Vesper_Libre/VesperLibre-Regular.ttf");
 }
 html,
 body {
@@ -27,13 +27,11 @@ button {
   align-items: center;
   justify-content: center;
 }
-
 .flex-block {
   display: flex;
   width: 100%;
   margin: 1rem 0;
 }
-
 .flex-header {
   flex-basis: 3rem;
   font-family: "Alasti", sans-serif;
@@ -41,7 +39,6 @@ button {
   letter-spacing: 0.1rem;
   color: #9f894c;
 }
-
 .flex-content div,
 .flex-header div {
   margin: 5px 0;
@@ -49,29 +46,49 @@ button {
 .flex-header div {
   padding: 10px;
 }
-
 .space-around {
   justify-content: space-around;
 }
 
 .vor-container {
+  display: flex;
   flex-direction: column;
   width: 100%;
 }
-
 .vor-button-wrapper {
   margin: 1rem 0;
 }
-
-.vor-dropdown {
-  width: 100%;
-}
-
-#vor-test {
+.vor-button-wrapper button {
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   background: #9f894c;
+  color: #fff;
+}
+.vor-button-wrapper button:hover {
+  transition: 0.4s;
+  background: #806f40;
+}
+.vor-dropdown {
+  width: 100%;
+}
+.vor-text {
+  font-family: "Vesper Libre", serif;
   color: #d3d3d3;
+}
+#vor-help {
+  cursor: pointer;
+  margin-left: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #9f894c;
+}
+#vor-help {
+  padding: 0 10px;
+}
+#vor-help:hover {
+  background: #055098;
+  transition: 0.4s;
+  border-radius: 10%;
 }
 
 .btn {
