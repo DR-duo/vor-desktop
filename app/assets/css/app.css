@@ -58,18 +58,18 @@ button {
 .vor-button-wrapper {
   margin: 1rem 0;
 }
+.vor-button-wrapper button {
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  background: #9f894c;
+  color: #fff;
+}
 .vor-dropdown {
   width: 100%;
 }
 .vor-text {
   font-family: "Vesper Libre", serif;
   color: #d3d3d3;
-}
-#vor-test {
-  text-transform: uppercase;
-  letter-spacing: 0.1rem;
-  background: #9f894c;
-  color: #fff;
 }
 
 .btn {
