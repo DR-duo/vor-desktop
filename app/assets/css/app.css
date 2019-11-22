@@ -64,12 +64,31 @@ button {
   background: #9f894c;
   color: #fff;
 }
+.vor-button-wrapper button:hover {
+  transition: 0.4s;
+  background: #806f40;
+}
 .vor-dropdown {
   width: 100%;
 }
 .vor-text {
   font-family: "Vesper Libre", serif;
   color: #d3d3d3;
+}
+#vor-help {
+  cursor: pointer;
+  margin-left: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #9f894c;
+}
+#vor-help {
+  padding: 0 10px;
+}
+#vor-help:hover {
+  background: #055098;
+  transition: 0.4s;
+  border-radius: 10%;
 }
 
 .btn {
