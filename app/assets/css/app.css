@@ -1,0 +1,184 @@
+@font-face {
+  font-family: "Alatsi";
+  src: url("../fonts/Alatsi/Alatsi-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Vesper Libre";
+  src: url("../fonts/Vesper_Libre/VesperLibre-Regular.ttf");
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  background: #012d58;
+}
+
+div,
+select,
+span,
+button {
+  font-family: "Vesper Libre", serif;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-block {
+  display: flex;
+  width: 100%;
+  margin: 1rem 0;
+}
+.flex-header {
+  flex-basis: 3rem;
+  font-family: "Alasti", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #9f894c;
+}
+.flex-content div,
+.flex-header div {
+  margin: 5px 0;
+}
+.flex-header div {
+  padding: 10px;
+}
+.space-around {
+  justify-content: space-around;
+}
+
+.vor-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.vor-button-wrapper {
+  margin: 1rem 0;
+}
+.vor-button-wrapper button {
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  background: #9f894c;
+  color: #fff;
+}
+.vor-button-wrapper button:hover {
+  transition: 0.4s;
+  background: #806f40;
+}
+.vor-dropdown {
+  width: 100%;
+}
+.vor-text {
+  font-family: "Vesper Libre", serif;
+  color: #d3d3d3;
+}
+#vor-help {
+  cursor: pointer;
+  margin-left: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  color: #9f894c;
+}
+#vor-help {
+  padding: 0 10px;
+}
+#vor-help:hover {
+  background: #055098;
+  transition: 0.4s;
+  border-radius: 10%;
+}
+
+.btn {
+  font-family: "Alasti", sans-serif;
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: 0.1rem;
+  color: #fff;
+  width: 120px;
+  height: 120px;
+  line-height: 120px;
+  border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  transition: 0.4s;
+  box-shadow: 0 5px 5px #888888;
+}
+.btn:hover {
+  box-shadow: none;
+}
+.btn-off {
+  background: #f84448;
+}
+.btn-off:hover {
+  background: #b73f15;
+}
+.btn-on {
+  background: #5ad272;
+}
+.btn-on:hover {
+  background: #798c64;
+}
+
+.slider-container {
+  padding: 10px 0;
+}
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 5px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+  margin-left: 0;
+}
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #9f894c;
+  cursor: pointer;
+}
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+.dropdown {
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgb(204, 204, 204);
+  transition: all 0.5s ease;
+  position: relative;
+  color: #474747;
+  text-align: left;
+  width: 9rem;
+}
+.dropdown .select {
+  cursor: pointer;
+  display: block;
+  padding: 10px;
+}
+.dropdown:hover {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+}
+.dropdown:active {
+  background-color: #f8f8f8;
+}
+.dropdown.active:hover,
+.dropdown.active {
+  box-shadow: 0 0 4px rgb(204, 204, 204);
+  border-radius: 5px 5px 0 0;
+  background-color: #f8f8f8;
+}

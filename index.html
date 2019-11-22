@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" />
+    <title>Voice of Runeterra</title>
+    <link rel="stylesheet" type="text/css" href="./app/assets/css/app.css" />
+    <link rel="stylesheet" type="text/css" href="./app/assets/lib/fontello/css/fontello.css" />
   </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+  <body class="flex-center">
+    <div class="vor-container flex-center">
+      <div class="flex-block">
+        <div id="vor-help">
+          <div><i class="icon-help-circled"></i>HELP</div>
+        </div>
+      </div>
+      <div class="flex-block flex-center">
+        <div class="btn btn-off" id="vor-button"></div>
+      </div>
+      <div class="flex-block space-around">
+        <div class="flex-header">
+          <div>Language</div>
+          <div>Voice</div>
+          <div>Volume</div>
+        </div>
+        <div class="flex-content">
+          <div class="dropdown">
+            <select id="vor-language" class="select vor-dropdown"></select>
+          </div>
+          <div class="dropdown">
+            <select id="vor-voices" class="select vor-dropdown"></select>
+          </div>
+          <div>
+            <div class="slider-container">
+              <input type="range" min="1" max="100" value="100" class="slider" id="vor-volume" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-block flex-center vor-button-wrapper">
+        <button id="vor-test">Test sound</button>
+      </div>
+    </div>
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
