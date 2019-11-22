@@ -36,10 +36,6 @@ class RuneterraAdapter {
         const right = TopLeftX + Width;
         const topEdge = TopLeftY;
         const bottom = TopLeftY - Height;
-        /*         console.log(`x:${x} y:${y}
-        gameX:${gameX} gameY:${gameY}
-        CardCode: ${CardCode}
-        left:${left} right:${right} top:${top} bottom: ${bottom}`); */
 
         return gameX >= left && gameX <= right && gameY <= topEdge && gameY >= bottom;
       }
@@ -53,7 +49,7 @@ class RuneterraAdapter {
     Rectangles = Rectangles.filter(x => x.CardCode !== "face");
 
     const localCards = Rectangles.filter(x => x.LocalPlayer);
-    const localHand = localCards.filter(x => x.Height/screenSize.ScreenHeight > 0.28);
+    const localHand = localCards.filter(x => x.Height / screenSize.ScreenHeight > 0.28);
     const opponentCards = Rectangles.filter(x => !x.LocalPlayer);
     const opponentHand = opponentCards.filter(x => x.TopLeftY > screenSize.ScreenHeight);
 
