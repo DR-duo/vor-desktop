@@ -47,6 +47,22 @@ class RuneterraAdapter {
 
     return card ? cardData[this.lang][card.CardCode] : null;
   }
+
+  async getCardState() {
+    let { Rectangles, Screen: screenSize } = await api.endpointPositionalRectangles();
+    Rectangles = Rectangles.filter(x => x.CardCode !== "face");
+
+    const localCards = Rectangles.filter(x => x.LocalPlayer);
+    const localHand = localCards.filter(x => x.Height/screenSize.ScreenHeight > 0.28);
+    const opponentCards = Rectangles.filter(x => !x.LocalPlayer);
+    const opponentHand = opponentCards.filter(x => x.TopLeftY > screenSize.ScreenHeight);
+
+    const localCardsCount = localCards.length - localHand.length;
+    const localHandCount = localHand.length;
+    const opponentCardsCount = opponentCards.length - opponentHand.length;
+    const opponentHandCount = opponentHand.length;
+    return { localCardsCount, localHandCount, opponentCardsCount, opponentHandCount };
+  }
 }
 
 module.exports = new RuneterraAdapter();

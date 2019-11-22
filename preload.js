@@ -19,8 +19,9 @@ async function handleDoubleClick(event) {
   }
 }
 
-function handleMiddleClick() {
-  synth.say("middle click");
+async function handleMiddleClick() {
+  const { localCardsCount, localHandCount, opponentCardsCount, opponentHandCount } = await runeterra.getCardState();
+  synth.say(`You have ${localCardsCount} in play, ${localHandCount} in hand, the opponent has ${opponentCardsCount} in play, and ${opponentHandCount} visible in hand`);
 }
 
 function handleMouseClick(event) {
