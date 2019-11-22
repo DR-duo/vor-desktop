@@ -1,23 +1,23 @@
 {
-  "name": "electron-quick-start",
+  "name": "voice-of-runeterra",
+  "author": "DR duo",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "A program to help voice cards in game Legends of Runeterra.",
   "main": "main.js",
   "scripts": {
-    "postinstall": "electron-rebuild",
+    "postinstall": "electron-rebuild && electron-builder install-app-deps",
     "start": "electron .",
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "homepage": "https://github.com/DR-duo/vor-desktop#readme",
+  "repository": "https://github.com/DR-duo/vor-desktop",
   "keywords": [
     "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "game",
+    "accessibility",
+    "tool"
   ],
-  "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^6.1.4",
@@ -46,5 +46,14 @@
     "arches": [
       "x64"
     ]
+  },
+  "build": {
+    "appId": "drduo.vor",
+    "productName": "Voice of Runeterra",
+    "copyright": "Copyright © year ${author}",
+    "win": {
+      "target": "NSIS",
+      "icon": "app/assets/img/vor-logo-256x256.ico"
+    }
   }
 }
